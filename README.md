@@ -33,4 +33,4 @@ The primary objective of this project is to implement a seamless, intuitive dyna
 
 1. **Clone the repository:**
    ```bash
-   git clone [https://github.com/THOUFEEKA-hub/my-shop-responsive-frontend-ecommerce-website.git](https://github.com/THOUFEEKA-hub/my-shop-responsive-frontend-ecommerce-website.git)
+   git clone https://github.com/THOUFEEKA-hub/my-shop-responsive-frontend-ecommerce-website.git
