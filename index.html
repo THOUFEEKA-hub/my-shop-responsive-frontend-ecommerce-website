@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Shop Total Calculator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Space+Grotesk:wght@500;700&family=Sora:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="bg-glow bg-glow-one"></div>
+    <div class="bg-glow bg-glow-two"></div>
+    <div class="grid-lines"></div>
+
+    <main class="app-shell">
+        <header class="topbar">
+            <div class="hero-copy">
+                <p class="eyebrow">Smart Billing</p>
+                <h1>My Shop Total Calculator</h1>
+                <p class="hero-text">Fast billing with a sleek control panel, live totals, and a guided checkout flow.</p>
+                <div class="hero-metrics">
+                    <div class="metric-chip">
+                        <span class="metric-label">Mode</span>
+                        <strong id="theme-indicator">Light Interface</strong>
+                    </div>
+                    <div class="metric-chip">
+                        <span class="metric-label">Cart Items</span>
+                        <strong id="item-count">00</strong>
+                    </div>
+                    <div class="metric-chip">
+                        <span class="metric-label">System Total</span>
+                        <strong id="hero-total">Rs 0.00</strong>
+                    </div>
+                </div>
+            </div>
+            <div class="topbar-actions">
+                <button id="theme-toggle" class="btn-secondary" type="button" aria-label="Toggle light and dark mode">
+                    <span class="theme-toggle-icon" aria-hidden="true">Theme</span>
+                    <span id="theme-toggle-label">Dark Mode</span>
+                </button>
+                <button id="add-item" class="btn-primary" type="button">+ Add Item</button>
+            </div>
+        </header>
+
+        <div class="stage-tabs" aria-label="Billing flow">
+            <button id="editor-tab" class="stage-tab is-active" type="button">1. Input</button>
+            <button id="summary-tab" class="stage-tab" type="button">2. Summary</button>
+        </div>
+        
+        <section id="editor-screen" class="screen is-active">
+            <section class="grid">
+                <section class="panel panel-large">
+                    <div class="panel-head">
+                        <h2>Item List</h2>
+                        <p>Enter price and quantity to calculate your bill.</p>
+                    </div>
+
+                    <div class="display-strip">
+                        <span>Live Entry Grid</span>
+                        <span>Auto Discount Tracking</span>
+                        <span>Realtime Billing Engine</span>
+                    </div>
+
+                    <div class="item-head item-row panel-frame">
+                        <span>Image</span>
+                        <span>Item</span>
+                        <span>Price (INR)</span>
+                        <span>Qty</span>
+                        <span>Discount %</span>
+                        <span>Line Total</span>
+                        <span>Action</span>
+                    </div>
+
+                    <div id="items"></div>
+                </section>
+
+                <section class="panel">
+                    <div class="panel-head">
+                        <h2>Charges</h2>
+                        <p>Dial in tax, shipping, and discount values.</p>
+                    </div>
+
+                    <label for="tax">Tax %</label>
+                    <input id="tax" type="number" value="18" min="0">
+
+                    <label for="shipping">Shipping (INR)</label>
+                    <input id="shipping" type="number" value="0" min="0">
+
+                    <label for="order-discount">Order Discount (INR)</label>
+                    <input id="order-discount" type="number" value="0" min="0">
+
+                    <button id="show-summary" class="btn-primary btn-wide" type="button">Review Summary</button>
+                </section>
+            </section>
+        </section>
+
+        <section id="summary-screen" class="screen">
+            <section class="summary-layout">
+                <div class="panel-head">
+                    <h2>Summary</h2>
+                    <p>Digital output board for the final bill.</p>
+                </div>
+
+                <div class="summary-hero panel">
+                    <div class="summary-hero-copy">
+                        <p class="summary-kicker">Checkout Transmission</p>
+                        <h3>Final Billing Snapshot</h3>
+                        <p class="summary-hero-text">Once you review this screen, your customer-facing totals stay clean and separated from the entry form.</p>
+                    </div>
+                    <div class="summary-total-orb">
+                        <span>Grand Total</span>
+                        <strong id="summary-orb-total" class="digital-readout digital-readout-large">Rs 0.00</strong>
+                    </div>
+                </div>
+
+                <section class="panel summary-panel">
+                    <div class="summary-list">
+                        <p><span>Subtotal</span><strong id="subtotal" class="digital-readout">Rs 0.00</strong></p>
+                        <p><span>Item Discounts</span><strong id="item-discount" class="digital-readout">Rs 0.00</strong></p>
+                        <p><span>Tax Amount</span><strong id="tax-amount" class="digital-readout">Rs 0.00</strong></p>
+                        <p><span>Shipping</span><strong id="shipping-amount" class="digital-readout">Rs 0.00</strong></p>
+                        <p><span>Order Discount</span><strong id="order-discount-amount" class="digital-readout">Rs 0.00</strong></p>
+                    </div>
+                    <hr>
+                    <div class="grand-total total-board">
+                        <span>Total</span>
+                        <strong id="grand-total" class="digital-readout digital-readout-large">Rs 0.00</strong>
+                    </div>
+                    <button id="back-to-editor" class="btn-secondary btn-wide" type="button">Back To Input</button>
+                </section>
+            </section>
+        </section>
+    </main>
+
+    <template id="item-template">
+        <div class="item-row">
+            <div class="item-visual">
+                <img class="item-image" alt="Product image">
+            </div>
+            <input type="text" class="item-name" placeholder="Item Name" value="Product">
+            <input type="number" class="price" min="0" step="0.01" value="0">
+            <input type="number" class="qty" min="1" value="1">
+            <input type="number" class="discount" min="0" max="100" value="0">
+            <div class="line-total">Rs 0.00</div>
+            <button class="remove btn-danger" type="button">Remove</button>
+        </div>
+    </template>
+
+    <div id="item-search-modal" class="modal" aria-hidden="true">
+        <div class="modal-backdrop"></div>
+        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="item-search-title">
+            <div class="modal-head">
+                <div>
+                    <p class="modal-kicker">Item Search</p>
+                    <h2 id="item-search-title">Add An Item</h2>
+                </div>
+                <button id="close-item-search" class="btn-secondary" type="button">Close</button>
+            </div>
+
+            <label for="item-search-input">Search item</label>
+            <input id="item-search-input" type="text" placeholder="Search product or type your own item name">
+
+            <div id="item-search-results" class="search-results"></div>
+
+            <button id="add-custom-item" class="btn-primary btn-wide" type="button">Add Custom Item</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
